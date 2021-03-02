@@ -1,16 +1,58 @@
 ### 基本类型（Primitive Types）
 
+<table>
+<tr>
+    <th>Category</th>
+    <th>Types</th>
+    <th>Size (bytes)</th>
+<tr>
+<tr>
+    <td rowspan="5">Integer</td>
+    <td>byte</td>
+    <td>1</td>
+</tr>
+<tr>
+    <td>short</td>
+    <td>2</td>
+</tr>
+<tr>
+    <td>int</td>
+    <td>4</td>
+</tr>
+<tr>
+    <td>long</td>
+    <td>8</td>
+</tr>
+<tr>
+    <td>char</td>
+    <td>4</td>
+</tr>
+<tr>
+    <td rowspan="2">Floating-point</td>
+    <td>float</td>
+    <td>4</td>
+</tr>
+<tr>
+    <td>double</td>
+    <td>8</td>
+</tr>
+<tr>
+    <td rowspan="2">Literals</td>
+    <td>boolean</td>
+    <td>n/a</td>
+</tr>
+<tr>
+    <td>null</td>
+    <td>n/a</td>
+</tr>
+<tr>
+    <td>Other</td>
+    <td>void</td>
+    <td>n/a</td>
+</tr>
+<table>
 
-1 byte
-2 short
-4 int
-8 long
-4 char
-4 float
-8 double
-boolean jvm 并没有规定字节大小
-
-null，array 不是基本类型
+注：array 不是基本类型
 
 ### 字符串（Strings）
 
