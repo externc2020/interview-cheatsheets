@@ -56,19 +56,18 @@
 
 ### 字符串（Strings）
 
-java string
-final class
-immutable
+* String: final class
+* String: immutable
 
 ### 容器（Collections）
 
-
 Set implementations
-- HashSet
-- LinkedHashSet
-- TreeSet
-- EnumSet
-- CopyOnWriteSet
+- HashSet: 无序，内部 `HashMap<E,Object>`;
+- LinkedHashSet: 保持插入顺序，内部 `LinkedHashMap<>`;
+- TreeSet: 内部 `NavigableMap<K,V>` 继承自 `SortedMap<K,V>` 最著名的实现 TreeMap (红黑树);
+- EnumSet: 内部是一个数组;
+- CopyOnWriteArraySet: 内部是 `CopyOnWriteArrayList<E>`;
+- EntrySet: 用于 map 内部;
 
 List implementations
 - ArrayList
