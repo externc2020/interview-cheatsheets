@@ -12,6 +12,11 @@ lfu
 缓存穿透
 bloomfilter bitmap
 
+只要返回数据不存在，则肯定不存在。
+返回数据存在，但只能是大概率存在。
+同时不能清除其中的数据。
+
+
 zset 跳表
 
 cache lfu lru
