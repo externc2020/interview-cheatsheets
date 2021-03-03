@@ -39,7 +39,7 @@ Bolt supports fully serializable ACID transactions.
 
 Bolt was originally a port of LMDB so it is architecturally similar. Both use a B+tree, have ACID semantics with fully serializable transactions, and support lock-free MVCC using a single writer and multiple readers.
 
-
+缓存双写一致性保障方案
 
 
 
