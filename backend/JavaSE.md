@@ -37,20 +37,13 @@
     <td>8</td>
 </tr>
 <tr>
-    <td rowspan="2">Literals</td>
+    <td>Literals</td>
     <td>boolean</td>
     <td>n/a</td>
 </tr>
-<tr>
-    <td>null</td>
-    <td>n/a</td>
-</tr>
-<tr>
-    <td>Other</td>
-    <td>void</td>
-    <td>n/a</td>
-</tr>
 <table>
+
+特殊：`null`, `void`
 
 注：array 不是基本类型
 
