@@ -12,6 +12,11 @@ lfu
 缓存穿透
 bloomfilter bitmap
 
+只要返回数据不存在，则肯定不存在。
+返回数据存在，但只能是大概率存在。
+同时不能清除其中的数据。
+
+
 zset 跳表
 
 cache lfu lru
@@ -34,7 +39,7 @@ Bolt supports fully serializable ACID transactions.
 
 Bolt was originally a port of LMDB so it is architecturally similar. Both use a B+tree, have ACID semantics with fully serializable transactions, and support lock-free MVCC using a single writer and multiple readers.
 
-
+缓存双写一致性保障方案
 
 
 

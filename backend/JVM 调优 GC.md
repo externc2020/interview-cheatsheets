@@ -64,6 +64,8 @@ Epsilon
 1.8 默认垃圾回收器 PS + Parallel Old
 
 HotSpot 参数
+
+```
 -Xms
 -Xmx
 -XX:PermSize 非堆内存
@@ -89,8 +91,8 @@ TLAB占eden区的百分比，默认是1%，TLAB全称是Thread Local Allocation 
 -XX:+CollectGen0First	
 FullGC时是否先YGC，默认false
 
-
 -XX:+PrintFlagsFinal
 -XX:+PrintFlagsInitial
 -XX:+PrintCommandLineFlags
 使用了哪些参数
+```
