@@ -14,11 +14,19 @@ When control returns from the method call, the virtual machine has made its best
 ### 垃圾回收算法
 引用计数，解决不了循环引用
 根可达 root searching
-root=jvm stack, native method stack, runtime constant pool, static references in method area, class
+
 常见算法
 mark-sweep 标记清除，标记垃圾内存，易产生碎片
 copying 拷贝，划分区域，从一个区域拷贝有效对象到另一个空间，无碎片，浪费空间
 mark-compact 标记压缩，标记垃圾内存，同时拷贝其他有用内存数据，做数据整理，消除碎片，效率较copy低（移动数据要线程同步，copy一次性）
+
+### GC Roots
+
+- jvm stack
+- native method stack
+- runtime constant pool
+- static references in method area,
+- class
 
 ### JVM 内存布局
 
@@ -53,8 +61,19 @@ gc 调优目标：减少 full gc (stop-the-world stw)
 - Parallel Old
 - CMS（Concurrent Mark Sweep）比较复杂，减少 stm 时间（200ms）
 
-不分代回收器
-G1(stm 10ms)，ZGC(stm 1ms)，Shenandoah
+G1
+- 分小块（region）
+- 小块打上代际标识，新生代Y，老年代O，幸存区S，未分配
+- stw 10ms？
+
+ZGC
+- JDK 11中推出
+- stw 不超过 10ms, 益于其采用的着色指针和读屏障技术
+- 停顿时间不会随着堆的大小，或者活跃对象的大小而增加
+- 支持8MB~4TB级别的堆（未来支持16TB）
+
+Shenandoah
+https://wiki.openjdk.java.net/display/shenandoah/Main
 
 调试用回收器
 Epsilon
@@ -68,6 +87,10 @@ Epsilon
 - jstat: 查看 JVM 内存使用状态
 - jmap: 生成内存快照
 - jhat: 分析内存快照，会启动 web 服务器，可以通过浏览器分析
+- jprofile
+- jca
+- jinfo
+- jdb
 - MAT工具: 功能比较强大的内存分析工具，可以替代jhat
 - 监控系统: Zabbix, Prometheus
 
