@@ -17,5 +17,6 @@
 ### RocketMQ Dledger
 
 - RocketMQ 4.5之后支持了一种叫做Dledger机制，基于Raft协议实现的一个机制。
+- openmessaging/openmessaging-storage-dledger: A raft-based java library for building high-available, high-durable, strong-consistent commitlog.
 - 我们可以让一个Master Broker对应多个Slave Broker， 一旦 Master Broker 宕机了，在多个 Slave 中通过 Dledger 技术 将一个 Slave Broker 选为新的 Master Broker 对外提供服务
 - 在生产环境中可以是用Dledger机制实现自动故障切换，只要10秒或者几十秒的时间就可以完成
