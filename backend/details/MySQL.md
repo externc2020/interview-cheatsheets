@@ -21,10 +21,31 @@
 
 ### 索引
 
+- 聚簇索引（Clustered Index)：数据存储在索引中，叶子节点保存记录，InnoDB
+- 非聚簇索引（Secondary Index）：叶子节点保存主见值：MyISAM
+- 覆盖索引：查询字段就在索引中，不用“回表”
+- 最左前缀：判断会不会走索引
+- 数据结构：哈希表，B 树，B+ 树
+
 
 ### MVCC
 
 - MVCC 可以保证不阻塞地读到一致的数据。但是，MVCC 并没有对实现细节做约束，为此不同的数据库的语义有所不同
 - tx id  roll pointer
 - 回滚日志
+
+### 日志
+
+- 重做日志(redo log)
+- 回滚日志（undo log）
+- 二进制日志（binlog）
+- 错误日志（errorlog）
+- 慢查询日志（slow query log）
+- 一般查询日志（general log）
+- 中继日志（relay log）
+
+### 常见 SQL
+
+- 双重否定
+- 翻转
 
