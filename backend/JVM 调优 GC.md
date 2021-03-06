@@ -1,87 +1,60 @@
+### 常见名词
+
+- Major/Minor GC
+- FullGC/YGC
+- CMS/G1/ZGC 垃圾回收器名字
+- stw = stop-the-world
+
 ### 常见问题
 
 - JVM自动内存管理，Minor GC与Full GC的触发机制
-- JVM调优基本思路
-- 淘宝热门商品信息在JVM哪个内存区域
+- JVM调优基本思路: 减少 FullGC，缩短 stw
+- 淘宝热门商品信息在 JVM 哪个内存区域
 - 字节码的编译过程
-- 类的加载过程 classloader
+- 类的加载过程
 - 对象在内存中的布局 org.openjdk.jol (jol = java object layout)
+- System.gc() 不一定立刻回收？
+> Runs the garbage collector. When control returns from the method call, the virtual machine has made its best effort to recycle all discarded objects.
 
-System.gc() 不一定立刻回收
-Runs the garbage collector.
-When control returns from the method call, the virtual machine has made its best effort to recycle all discarded objects.
+### JVM 内存布局
+
+- 不要和 Java 内存模型（JMM）混淆
+- 五大区域：方法区，堆，线程栈，程序计数器，本地方法区
+
+![HotSpot JVM: Architecture](../assets/hotspot.png)
+
+### 垃圾回收器
+- Java 8 默认 Parallel Scavenge + Parallel Old
+- Java 9 默认 G1
 
 ### 垃圾回收算法
-引用计数，解决不了循环引用
-根可达 root searching
-
-常见算法
-mark-sweep 标记清除，标记垃圾内存，易产生碎片
-copying 拷贝，划分区域，从一个区域拷贝有效对象到另一个空间，无碎片，浪费空间
-mark-compact 标记压缩，标记垃圾内存，同时拷贝其他有用内存数据，做数据整理，消除碎片，效率较copy低（移动数据要线程同步，copy一次性）
+- 引用计数，解决不了循环引用
+- 根可达 root searching
+  * mark-sweep 标记清除，标记垃圾内存，易产生碎片
+  * copying 拷贝，划分区域，从一个区域拷贝有效对象到另一个空间，无碎片，浪费空间
+  * mark-compact 标记压缩，标记垃圾内存，同时拷贝其他有用内存数据，做数据整理，消除碎片，效率较copy低（移动数据要线程同步，copy一次性）
 
 ### GC Roots
-
 - jvm stack
 - native method stack
 - runtime constant pool
 - static references in method area,
 - class
 
-### JVM 内存布局
+### JVM 堆布局
+- 和使用的垃圾回收器有关
+- 分代型：Serial，Parallel，CMS
+  * 新生代 = Eden + Survivor(S0, S1) Minor GC 发生在 Survivor，来回换，new = eden(8):s0(1):s1(1)
+  * 老年代 Full GC
+  * 永久代（PermGen）1.8 以前 -> 1.8 元数据区 metaspace，装 class metadata，例如 aop 创建很多 proxy 会爆这个区域
+  * 字符串常量 1.8 以前存永久代，1.8 存堆
+  * 元数据区是操作系统管理，非jvm管理（待求证）
+  * survivor 区: copying 回收算法
+  * old 区：mark-compact 回收算法
+  * s区装不下直接丢old，或者对象过大也直接丢old，old 满 FullGC
+- 网格型：G1，ZGC，Shenandoah
 
-- 不要和 Java 内存模型（JMM）混淆
-新生代 = Eden + Survivor(S0, S1) Minor GC 发生在 Survivor，来回换
-老年代 Full GC
-
-传统gc分代算法，new，old
-1.7 有 perm gen（永久代）-> 1.8 元数据区 metaspace，装 class metadata，例如 aop 创建很多 proxy 会爆这个区域
-字符串常量 1.7 存永久代，1.8 存堆
-元数据区是操作系统管理，非jvm管理
-g1没有分代
-
-new = eden(8) : s0(1) :s1(1)
-survivor copying 回收算法
-old mark-compact 回收算法
-
-s区装不下直接丢old，old 满 full gc
-
-gc 调优目标：减少 full gc (stop-the-world stw)
-
-
-### 回收器类型
-
-新生代可配置的回收器
-- 串行回收 Serial（单线程，停所有其他线程）
-- 并行回收 Parallel Scavenge = PS（多线程，无法配合CMS）
-- 改进版并行回收 ParNew（PS改进，可配合 CMS）
-
-老年代配置的回收器
-- Serial Old
-- Parallel Old
-- CMS（Concurrent Mark Sweep）比较复杂，减少 stm 时间（200ms）
-
-G1
-- 分小块（region）
-- 小块打上代际标识，新生代Y，老年代O，幸存区S，未分配
-- stw 10ms？
-
-ZGC
-- JDK 11中推出
-- stw 不超过 10ms, 益于其采用的着色指针和读屏障技术
-- 停顿时间不会随着堆的大小，或者活跃对象的大小而增加
-- 支持8MB~4TB级别的堆（未来支持16TB）
-
-Shenandoah
-https://wiki.openjdk.java.net/display/shenandoah/Main
-
-调试用回收器
-Epsilon
-
-1.8 默认垃圾回收器 PS + Parallel Old
-
-
-### JVM 调优常见工具
+### JVM 调优常用工具
 
 - jvisualvm
 - jstat: 查看 JVM 内存使用状态

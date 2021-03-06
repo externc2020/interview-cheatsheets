@@ -7,6 +7,13 @@
 - synchronized/volatile
 - Java 1.6 关于 synchronized 的优化：锁升级
 - [锁的底层原理](./Java+并发.md)
+- JMM（Java 内存模型）
+  * 主内存（堆），线程工作内存（线程栈）
+  * 线程：工作内存 <--> 主内存
+  * 线程工作内存相互隔离
+  * lock/unlock
+  * read -> load -> use -> 执行引擎 -> assign -> store -> write
+  
 
 
 ### 工具类（java.util.concurrent)
