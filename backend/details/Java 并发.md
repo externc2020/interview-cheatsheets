@@ -1,4 +1,15 @@
-### 并发 - 工具类（java.util.concurrent)
+# Java 并发
+
+### 基本
+
+- Object Layout: mark word
+- Monitor
+- synchronized/volatile
+- Java 1.6 关于 synchronized 的优化：锁升级
+- [锁的底层原理](./Java+并发.md)
+
+
+### 工具类（java.util.concurrent)
 
 #### java.util.concurrent.locks
 
