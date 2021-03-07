@@ -1,6 +1,6 @@
-# JVM
+# HotSpot JVM
 
-这篇描述的内容都是针对 **HotSpot** 这一种 JVM 实现来说的。HotSpot 最初并非有 Sun 公司开发，而是由一家名为“Longview Technologies”的小公司设计的，1997 年被 Sun 收购。类似的 JVM 实现还有：
+HotSpot 最初并非有 Sun 公司开发，而是由一家名为“Longview Technologies”的小公司设计的，1997 年被 Sun 收购。类似的 JVM 实现还有：
 
 - BEA JRockit
 - IMB J9
@@ -38,6 +38,8 @@
 
 ### 对象的内存布局
 
+- org.openjdk.jol (jol = java object layout)
+
 ### 优化思路
 
 - 减少 FullGC，缩短 stw
@@ -56,8 +58,19 @@
 
 ### 内存页
 
+- 操作系统概念
+- 大小一般 4K
+- CPU 的 MMU 负责将虚拟内存地址映射为物理地址
+- 内存存在页表（page tabe）= 页索引
+- TLB（Translation lookaside buffer) 页表寄存器缓冲，CPU 中
+- 内存访问频繁换页影响性能
 - linux scheduler starvation problem
 - page trap spinning
+
+### 内存映射文件 Memory-mapped file (mmap)
+
+- 内存共享
+- NIO MappedByteBuffer 堆外申请内存
 
 ### 即时编译 JIT (Just-in-time)
 
