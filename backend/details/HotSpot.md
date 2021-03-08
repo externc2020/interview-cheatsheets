@@ -94,3 +94,5 @@ HotSpot 最初并非有 Sun 公司开发，而是由一家名为“Longview Tech
 - synchronized 性能优化 6
 - lambda mapreduce 8
 - AOT (Ahead-of-time) 9 removed 16
+- java.internal.vm.annotation.ForceInline
+- java.lang.invoke.VarHandle.acquireFence/releaseFence

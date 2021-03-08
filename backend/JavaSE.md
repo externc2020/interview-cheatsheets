@@ -66,6 +66,7 @@
 - synchronized: 重量级锁，锁升级
 - volatile
 - strictfp
+- transient
 
 ### 异常（Exceptions）
 
