@@ -57,13 +57,6 @@
 
 ### 同类中 @Transactional 方法调用另外 @Transactional 方法为何失效
 
-### Spring 框架使用了哪些设计模式
-- 代理模式：AOP
-- 单例模式: Bean
-- 模板模式: JdbcTemplate, RestTemplate
-- 委派模式: DispatcherServlet
-- 工厂模式: BeanFactory
-
 ### Spring Boot 1.5 和 2 版本的主要区别
 
 ### Spring Cloud 常用组件
