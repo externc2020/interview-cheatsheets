@@ -101,6 +101,7 @@
 
 - Object monitor
 - 锁升级
+- 字节码 monitorenter monitorexit 1 个 enter 对应 两个 exit，一个是正常退出，一个是异常退出
 
 ### volatile
 
