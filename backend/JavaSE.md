@@ -82,7 +82,7 @@
 - strictfp
 - BigDecimal
 
-### final 关键子
+### final 关键字
 
 - final 类
 - final 属性
