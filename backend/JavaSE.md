@@ -68,6 +68,7 @@
 - 字节码头部(HotSpot) = mark word + klass pointer
 - == vs equals
 - 为什么建议重写 equals 后还要同时重写 hashCode
+- 匿名类
 
 ### 类加载
 
@@ -76,13 +77,17 @@
 - 双亲委派模型
 - classloader hell，java 9 jigsaw
 
-### 关键字
+### 数字精度
 
-- final
-- synchronized：锁升级
-- volatile：可见性，防指令重排，不保证原子性
 - strictfp
-- transient
+- BigDecimal
+
+### final 关键子
+
+- final 类
+- final 属性
+- final 局部变量
+- const 保留字（无作用）
 
 ## 容器
 
@@ -92,10 +97,23 @@
 
 ## 并发
 
+### synchronized
+
+- Object monitor
+- 锁升级
+
+### volatile
+
+- 保证可见性，防指令重排，不保证原子性
+
 ### 线程（Threads）
 
 - 状态转换：RUNNING，READY(yield切换RUNNING)，WAITING（wait/join/notify,LockSupport.park/unpark),
 NEW, TIMED_WAITING(sleep/), BLOCKED(synchronized), TERMINATED
+
+### 线程池
+
+- 参数：核心/最大线程数，队列
 
 ### ThreadLocal
 
@@ -104,6 +122,11 @@ NEW, TIMED_WAITING(sleep/), BLOCKED(synchronized), TERMINATED
 - Thread -> ThreadLocalMap -> Entry -> Value 容易内存泄漏
 - Java InheritableThreadLocal 解决父子线程值传递（例如：UserID，TransactinID，TraceID）
 - 阿里 TransmittableThreadLocal(TTL) 上面的增强版，解决线程池
+
+### JUC（java.util.concurrent）常用类
+
+- ReentrantLock
+- AQS
 
 ## 异常（Exceptions）
 
@@ -120,4 +143,4 @@ target 指针标示了异常处理器的起始位置：catch 代码块的起始�
 - 序列化 transient，安全问题
 - 反射（Reflection）
 - Java 探针（Java Agent），JVMTI（Tool Interface）
-- Java 扩展 SPI（Service Provider Interface)
+- Java 扩展 SPI（Service Provider Interface）
