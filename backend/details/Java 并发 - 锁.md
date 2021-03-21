@@ -1,16 +1,22 @@
 ### 名词
 
-- 偏向锁（biased locking）object markword 存放当前线程指针，默认延迟 4 秒，偏向锁要撤销，所以在明知某些资源会有多线程竞争，就不用偏向锁，所以会有延迟
+- 并发编程锁实现方法：管程（Monitor）vs 信号量（Semaphere）, PV 操作
+- 
+- 偏向锁（Biased Locking）object markword 存放当前线程指针，默认延迟 4 秒，偏向锁要撤销，所以在明知某些资源会有多线程竞争，就不用偏向锁，所以会有延迟
 -XX:BiasedLockingStartupDelay=0
 - 乐观锁（轻量，自旋，无锁 lock-free）CAS，用户态，适合锁定时间短的操作，等待锁消耗 CPU
 - 悲观锁（重量）内核态
 - 对象锁状态（markword） 8 字节分布及状态
+- 公平，非公平
+- 共享（读），排他（写）
+- CLH 锁（SMP），MCS 锁（NUMA）
 
 ### CAS 原子性问题
 
-CAS 原子性问题，AtomicInteger JUC 大多是时 CAS，CPU 指令也不能保障原子性（LOCK_IF_MP，这种汇编实现是因为多核情况下不行，解决方法汇编加 lock = lock cmpxchg，lock 锁定总线（优先锁定缓存行，然后锁定北桥）
-
-CAS, ABA（引用，泄漏造成大问题，版本号/bool）
+- AtomicInteger JUC 大多是时 CAS，
+- CPU 指令也不能保障原子性（LOCK_IF_MP，这种汇编实现是因为多核情况下不行，解决方法汇编加 lock = lock cmpxchg，lock 锁定总线（优先锁定缓存行，然后锁定北桥）
+- CAS, ABA（引用，泄漏造成大问题，版本号/bool）
+- CAS 不是锁，是实现乐观锁，轻量级锁的一个核心机制
 
 ### 在同一个缓存行存在竞争
 
@@ -23,20 +29,20 @@ CAS, ABA（引用，泄漏造成大问题，版本号/bool）
 
 ### synchronized
 
-- 1.5 后有一个锁升级的过程：偏向 -> 乐观 -> 悲观
+- 1.6 锁升级的过程：偏向 -> 乐观 -> 悲观
 - 偏向，一旦有竞争升级乐观，显示调用 Object.wait() 升级悲观
-- 字节码 lock cmpxchg
+- 字节码 cmpxchg (多核CPU lock cmpxchg)
 
 ### volatile
 
 - 可见性：Java 内存模型（JMM），强制刷新
-- 有序性：禁止指令重排，内存屏障
+- 有序性：禁止指令重排，内存屏障，
 - 不保证原子性
 - 有内存屏障，会导致缓存行失效
 - volatile 内存屏障 就是 lock addl 汇编指令下往某个寄存器上加一个 0
 - 用 hsdis（hotspot disassembler）观察 synchronized volatile
 
-DCL（double-check lock） 单利为什么要加 volatile
+### DCL（double-check lock）单例为什么要加 volatile
 
 ```
 public class Singleton {
@@ -59,6 +65,15 @@ public class Singleton {
 
 Java可以利用JVM内部静态类装载的特点实现“延迟初始化占位类模式”来达到同样的效果
 
-### AQS
+### JVM 存在锁降级吗？
 
-- 字节码 monitorenter monitorexit 1 个 enter 对应 两个 exit，一个是正常退出，一个是异常退出
+- stw 阶段 VMThread 独占的对象上的重量级锁可以降级（deflate）
+- 逃逸分析后发生的锁消除
+
+### 锁优化
+
+- 锁粗化（Lock Coarsening）将多个连续的锁扩展成一个范围更大的锁，用以减少频繁互斥同步导致的性能损耗。
+- 锁消除（Lock Elimination）JVM及时编译器在运行时，通过逃逸分析，如果判断一段代码中，堆上的所有数据不会逃逸出去从来被其他线程访问到，就可以去除这些锁。
+- 偏向锁（Biased Locking）
+- 轻量级锁（Lightweight Locking）
+- 适应性自旋（Adaptive Spinning）
