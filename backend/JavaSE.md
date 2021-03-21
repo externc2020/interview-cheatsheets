@@ -124,10 +124,16 @@ NEW, TIMED_WAITING(sleep/), BLOCKED(synchronized), TERMINATED
 - Java InheritableThreadLocal 解决父子线程值传递（例如：UserID，TransactinID，TraceID）
 - 阿里 TransmittableThreadLocal(TTL) 上面的增强版，解决线程池
 
-### JUC（java.util.concurrent）常用类
+### JUC（java.util.concurrent）
 
 - ReentrantLock
 - AQS
+- Executor, Future
+
+### Java 8
+
+- Parallel streams
+- CompletableFuture
 
 ## 异常（Exceptions）
 
@@ -141,7 +147,7 @@ target 指针标示了异常处理器的起始位置：catch 代码块的起始�
 
 ## 其他
 
-- 序列化 transient，安全问题
+- 序列化 transient，serialVersionUID，安全问题
 - 反射（Reflection）
 - Java 探针（Java Agent），JVMTI（Tool Interface）
 - Java 扩展 SPI（Service Provider Interface）
