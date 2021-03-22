@@ -24,7 +24,10 @@
 
 ### Node
 
-### park/unpark
+### LockSupport.park()/unpark()
+
+- 实现线程的阻塞和唤醒
+- 不可重入
 
 ### ConditionObject
 

@@ -1,7 +1,5 @@
 ### 名词
 
-- 并发编程锁实现方法：管程（Monitor）vs 信号量（Semaphere）, PV 操作
-- 
 - 偏向锁（Biased Locking）object markword 存放当前线程指针，默认延迟 4 秒，偏向锁要撤销，所以在明知某些资源会有多线程竞争，就不用偏向锁，所以会有延迟
 -XX:BiasedLockingStartupDelay=0
 - 乐观锁（轻量，自旋，无锁 lock-free）CAS，用户态，适合锁定时间短的操作，等待锁消耗 CPU
@@ -77,3 +75,16 @@ Java可以利用JVM内部静态类装载的特点实现“延迟初始化占位�
 - 偏向锁（Biased Locking）
 - 轻量级锁（Lightweight Locking）
 - 适应性自旋（Adaptive Spinning）
+
+
+### Java
+
+- Object Layout: mark word
+- synchronized/volatile
+
+### JMM（Java 内存模型）
+  * 主内存（堆），线程工作内存（线程栈）
+  * 线程：工作内存 <--> 主内存
+  * 线程工作内存相互隔离
+  * lock/unlock
+  * read -> load -> use -> 执行引擎 -> assign -> store -> write
